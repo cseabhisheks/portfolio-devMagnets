@@ -56,15 +56,19 @@ export default function Service() {
         setFormOpen(false)
         fetchAllServiceCard()
     }
+    const Admin = false
 
     return (<>
         {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} onChange={onChange} field={field} onSubmit={submit} data={ServiceData} />}
 
         <div className=" w-full mt-5 capitalize relative ">
 
-            <div className="absolute right-0">
-                <Btn color='green' text="add" onClick={add} />
-            </div>
+            {Admin &&
+                <div className="absolute right-0">
+                    <Btn color='green' text="add" onClick={add} />
+                </div>
+            }
+
 
             <div className="text-xl text-textPrimary capitalize mb-5 ">my serivces</div>
 
@@ -78,10 +82,12 @@ export default function Service() {
                                 <p className="text-textSecondary">{e.description}</p>
                                 <a href="/contact" className="w-fit text-accent uppercase hover:border-b-2 border-accent">order now &gt;</a>
 
-                                <div className="flex justify-between">
-                                    <Btn color='red' text="delete" onClick={() => remove(e._id)} />
-                                    <Btn color='orange' text="modify" onClick={() => modify(e._id)} />
-                                </div>
+                                {Admin && <>
+                                    <div className="flex justify-between">
+                                        <Btn color='red' text="delete" onClick={() => remove(e._id)} />
+                                        <Btn color='orange' text="modify" onClick={() => modify(e._id)} />
+                                    </div>
+                                </>}
 
                             </div>
                         ))

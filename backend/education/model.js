@@ -22,8 +22,7 @@ const educationSchema = new mongoose.Schema({
     },
     educationQualification: {
         type: String,
-        required: true,
-        
+        required: true,  
     }
 })
 

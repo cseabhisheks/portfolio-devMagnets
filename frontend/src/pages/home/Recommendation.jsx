@@ -141,6 +141,8 @@ export default function Recommendation() {
         return stars;
     };
 
+
+    const Admin = false
     // ====== RENDER ======
     return (
         <>
@@ -155,9 +157,11 @@ export default function Recommendation() {
             )}
 
             <div className="w-full mt-5 capitalize relative">
-                <div className="absolute right-0">
-                    <Btn color="green" text="add" onClick={add} />
-                </div>
+                {Admin &&
+                    <div className="absolute right-0">
+                        <Btn color="green" text="add" onClick={add} />
+                    </div>
+                }
                 <div className="text-xl text-textPrimary capitalize">Recommendations</div>
 
                 {/* ====== CARDS CONTAINER ====== */}
@@ -189,10 +193,13 @@ export default function Recommendation() {
                                     <div className="flex gap-1 w-fit px-2 py-1 rounded-2xl bg-dark">
                                         {star(item.rate)}
                                     </div>
-                                    <div className="flex justify-between">
-                                        <Btn color="red" text="delete" onClick={() => remove(item._id)} />
-                                        <Btn color="orange" text="modify" onClick={() => modify(item._id)} />
-                                    </div>
+
+                                    {Admin && <>
+                                        <div className="flex justify-between">
+                                            <Btn color="red" text="delete" onClick={() => remove(item._id)} />
+                                            <Btn color="orange" text="modify" onClick={() => modify(item._id)} />
+                                        </div>
+                                    </>}
                                 </div>
                             ) : null
                         )
@@ -207,9 +214,8 @@ export default function Recommendation() {
                                 <span
                                     key={idx}
                                     onClick={() => customSlide(idx)}
-                                    className={`cursor-pointer w-3 md:w-5 h-1 rounded-xl transition-all duration-300 ${
-                                        isVisible(idx) ? "bg-accent" : "bg-gray-400"
-                                    }`}
+                                    className={`cursor-pointer w-3 md:w-5 h-1 rounded-xl transition-all duration-300 ${isVisible(idx) ? "bg-accent" : "bg-gray-400"
+                                        }`}
                                 />
                             ))}
                         </div>

@@ -138,6 +138,7 @@ export default function Portfolio() {
             console.log("err while adding/modifying project " + err);
         }
     };
+    const Admin=false
 
     return (
         <>
@@ -172,6 +173,7 @@ export default function Portfolio() {
                 </ul>
 
                 {/* Add Button */}
+                {Admin&&
                 <div className="mx-auto text-xs text-green-60 flex justify-end items-end w-full m-5">
                     <div
                         className="bg-green-400 px-8 py-2 rounded-3xl hover:bg-green-600 hover:text-green-400 cursor-pointer"
@@ -189,6 +191,7 @@ export default function Portfolio() {
                         add
                     </div>
                 </div>
+                }
 
                 {/* Project Cards */}
                 {projects.length == 0 ? <div className="capitalize text-center">no {filter} projects in portfolio 🥲</div> :
@@ -217,6 +220,8 @@ export default function Portfolio() {
                                         >
                                             link &gt;
                                         </a>
+
+                                    {Admin &&
                                         <div className="flex">
                                             <div
                                                 className="mx-auto text-xs text-red-600 bg-red-400 w-fit px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-red-400 cursor-pointer"
@@ -235,6 +240,7 @@ export default function Portfolio() {
                                                 modify
                                             </div>
                                         </div>
+                                        }
                                     </div>
                                 )}
                             </div>

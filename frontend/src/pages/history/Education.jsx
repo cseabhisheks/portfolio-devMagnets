@@ -59,6 +59,7 @@ export default function Education() {
         setFormOpen(false)
         fetchAllServiceCard()
     }
+    const Admin=false
     return (<>
         {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} field={field} onChange={onChange} onSubmit={submit} data={ServiceData} />}
 
@@ -66,9 +67,11 @@ export default function Education() {
 
 
             <div className="text-xl text-textPrimary capitalize mb-5">Education</div>
+            {Admin &&
             <div className="w-fit mb-5">
                 <Btn color='green' text="add" onClick={add} />
             </div>
+            }
             {FetchServices.length == 0 ?
                 <div className="text-white text-center">no education 🥲</div> :
                 <div className="flex  flex-col gap-5 w-fit lg:w-fit mb-10 relative ">
@@ -91,10 +94,12 @@ export default function Education() {
                             </div>
                             <p className="text-textSecondary">{education.description}</p>
                             <button type="button" className="w-fit text-accent uppercase">{education.educationQualification} &gt;</button>
+                           {Admin&&
                             <div className="flex justify-between">
                                 <Btn color='red' text="delete" onClick={() => remove(education._id)} />
                                 <Btn color='orange' text="modify" onClick={() => modify(education._id)} />
                             </div>
+                            }
                         </div>
                     ))}
                 </div>

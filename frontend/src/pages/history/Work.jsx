@@ -15,7 +15,7 @@ export default function Work() {
         { name: 'author', type: 'text', Icon: MdDescription },
         { name: 'duration', type: 'text', Icon: MdTitle },
         { name: 'description', type: 'text', Icon: MdDescription },
-        { name: 'educationQualification', type: 'text', Icon: MdTitle },
+        { name: 'role', type: 'text', Icon: MdTitle },
     ]
 
     // for display added data
@@ -59,15 +59,18 @@ export default function Work() {
         setFormOpen(false)
         fetchAllServiceCard()
     }
+    const Admin = false;
     return (<>
         {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} field={field} onChange={onChange} onSubmit={submit} data={ServiceData} />}
 
         <div className=" w-full mt-5 capitalize relative ">
 
             <div className="text-xl text-textPrimary capitalize mb-5">work history</div>
-            <div className="w-fit mb-5">
-                <Btn color='green' text="add" onClick={add} />
-            </div>
+            {Admin &&
+                <div className="w-fit mb-5">
+                    <Btn color='green' text="add" onClick={add} />
+                </div>
+            }
             {FetchServices.length == 0 ?
                 <div className="text-white text-center">no work history 🥲</div> :
                 <div className="flex  flex-col gap-5 w-fit lg:w-fit mb-10 relative ">
@@ -90,10 +93,12 @@ export default function Work() {
                             </div>
                             <p className="text-textSecondary">{education.description}</p>
                             <button type="button" className="w-fit text-accent uppercase">{education.role} &gt;</button>
-                            <div className="flex justify-between">
-                                <Btn color='red' text="delete" onClick={() => remove(education._id)} />
-                                <Btn color='orange' text="modify" onClick={() => modify(education._id)} />
-                            </div>
+                            {Admin &&
+                                <div className="flex justify-between">
+                                    <Btn color='red' text="delete" onClick={() => remove(education._id)} />
+                                    <Btn color='orange' text="modify" onClick={() => modify(education._id)} />
+                                </div>
+                            }
                         </div>
                     ))}
                 </div>
