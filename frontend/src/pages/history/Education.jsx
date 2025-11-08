@@ -4,6 +4,8 @@ import { MdTitle, MdDescription } from "react-icons/md"
 import ServiceTemplate from "../../utilities/ServiceTemplate";
 import { useState, useEffect } from "react";
 import Btn from "../../utilities/Btn";
+import { isAuthenticated } from "../../admin/AuthenticatedContext";
+import { useContext } from "react";
 export default function Education() {
     const backend = import.meta.env.VITE_BACKEND
     // to open or close the form
@@ -59,7 +61,7 @@ export default function Education() {
         setFormOpen(false)
         fetchAllServiceCard()
     }
-    const Admin=false
+     const Admin = useContext(isAuthenticated).AdminStatus
     return (<>
         {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} field={field} onChange={onChange} onSubmit={submit} data={ServiceData} />}
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AddProject from "./AddProject";
-
+import { isAuthenticated } from "../../admin/AuthenticatedContext";
+import { useContext } from "react";
 export default function Portfolio() {
     const [isProjectHover, setProjectHover] = useState(null);
     const [projects, setProjects] = useState([]);
@@ -138,7 +139,7 @@ export default function Portfolio() {
             console.log("err while adding/modifying project " + err);
         }
     };
-    const Admin=false
+    const Admin = useContext(isAuthenticated).AdminStatus
 
     return (
         <>

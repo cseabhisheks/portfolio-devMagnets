@@ -1,6 +1,8 @@
 
 import { FetchService, removeService, FetchServiceOne, addService } from "../../utilities/fetchCall"
 import { MdTitle, MdDescription } from "react-icons/md"
+import { isAuthenticated } from "../../admin/AuthenticatedContext";
+import { useContext } from "react";
 import ServiceTemplate from "../../utilities/ServiceTemplate";
 import { useState, useEffect } from "react";
 import Btn from "../../utilities/Btn";
@@ -59,7 +61,7 @@ export default function Work() {
         setFormOpen(false)
         fetchAllServiceCard()
     }
-    const Admin = false;
+  const Admin = useContext(isAuthenticated).AdminStatus
     return (<>
         {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} field={field} onChange={onChange} onSubmit={submit} data={ServiceData} />}
 

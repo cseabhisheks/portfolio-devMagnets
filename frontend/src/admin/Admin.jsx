@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { FaUser, FaCode } from "react-icons/fa"
+import { useContext } from "react"
+import { isAuthenticated } from "./AuthenticatedContext"
+import { Navigate } from "react-router-dom"
 export default function Admin() {
     const [form, setForm] = useState({
         username: "",
@@ -14,6 +17,7 @@ export default function Admin() {
         console.log(form)
 
     }
+    const {AdminStatus,setAdminStatus} = useContext(isAuthenticated)
     const submit = async (e) => {
         e.preventDefault()
         const backend = import.meta.env.VITE_BACKEND
@@ -27,6 +31,13 @@ export default function Admin() {
         })
         const res = await req.json()
         console.log(res)
+        setAdminStatus(res.success)
+        console.log(AdminStatus)
+        if(AdminStatus){
+            <Navigate to='/' />
+        }
+        
+
     }
     return (<>
         <div className="absolute w-[100vw] h-[100vh] z-[122] flex justify-center items-center bg-dark top-0  border-2 left-0">

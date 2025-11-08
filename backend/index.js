@@ -48,7 +48,7 @@ app.post('/admin', (req, res, next) => {
         req.logIn(user, (err) => {
             if (err) return res.json({mess:'login error'})
                 console.log(req.session)
-                return res.json({mess:'hi dev'})
+                return res.json({mess:'hi dev',success:true})
         })
     })(req, res, next)
 

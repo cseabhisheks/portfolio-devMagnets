@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import ServiceTemplate from "../../utilities/ServiceTemplate";
 import { MdTitle, MdDescription } from "react-icons/md";
 import { FetchService, removeService, FetchServiceOne, addService } from "../../utilities/fetchCall";
+import { isAuthenticated } from "../../admin/AuthenticatedContext";
+import { useContext } from "react";
 import Btn from "../../utilities/Btn";
 
 export default function Recommendation() {
@@ -142,7 +144,7 @@ export default function Recommendation() {
     };
 
 
-    const Admin = false
+ const Admin = useContext(isAuthenticated).AdminStatus
     // ====== RENDER ======
     return (
         <>
