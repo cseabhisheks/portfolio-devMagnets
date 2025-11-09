@@ -12,11 +12,12 @@ import Admin from "./admin/Admin"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { isAuthenticated } from "./admin/AuthenticatedContext.js"
 import { useState } from "react"
+import PR from "./ProtectedRoute.jsx/PR.jsx"
 export default function App() {
-    const [AdminStatus,setAdminStatus]=useState(false)
+  const [AdminStatus, setAdminStatus] = useState(false)
   return (<>
 
-    <isAuthenticated.Provider value={{AdminStatus,setAdminStatus}}>
+    <isAuthenticated.Provider value={{ AdminStatus, setAdminStatus }}>
       <BrowserRouter>
         <Routes>
           <Route element={<PublicLayout />}>
@@ -27,7 +28,9 @@ export default function App() {
             <Route path='/contact' element={<Contact />} />
             <Route path='/donate' element={<Donation />} />
             <Route path='/mentorship' element={<MentorShip />} />
-            <Route path='/mails' element={AdminStatus?<Mails/>:<Navigate to='/admin'/>} />
+            <Route element={<PR/>}>
+               <Route path='/mails' element={ <Mails />   } />
+            </Route>             
             <Route path='/admin' element={<Admin />} />
             <Route path='*' element={<><div>page is under construction</div></>} />
           </Route>

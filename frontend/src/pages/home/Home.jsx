@@ -7,6 +7,7 @@ export default function Home() {
         <Intro />
         <Service />
         <Pricing />
+    
         <Recommendation/>
     </>)
 }
