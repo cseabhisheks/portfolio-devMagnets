@@ -94,7 +94,7 @@ export default function Education() {
                                     <span className="w-3 h-3 rounded-full bg-black"></span>
                                 </span>
                             </div>
-                            <p className="text-textSecondary">{education.description}</p>
+                            <p className="text-textSecondary h-[50px] overflow-hidden hover:h-fit">{education.description}</p>
                             <button type="button" className="w-fit text-accent uppercase">{education.educationQualification} &gt;</button>
                            {Admin&&
                             <div className="flex justify-between">

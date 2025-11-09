@@ -212,7 +212,7 @@ export default function Portfolio() {
                                 {isProjectHover === idx && (
                                     <div className="font-semibold min-h-[50px] p-5 absolute bottom-0 bg-dark/70 w-full">
                                         <h1>{project.title}</h1>
-                                        <div className="text-xs text-gray-400">
+                                        <div className="text-xs text-gray-400 h-[25px] overflow-hidden hover:h-fit">
                                             {project.description}
                                         </div>
                                         <a

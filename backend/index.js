@@ -43,15 +43,21 @@ passport.deserializeUser(async (id, done) => {
 })
 app.post('/admin', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-        if (err) return res.json({ mess: "server error" })
-        if (!user) return res.json(info.mess)
+        if (err) return res.json({ mess: "server error", success: false })
+        if (!user) return res.json({ mess: info.mess, success: false })
         req.logIn(user, (err) => {
-            if (err) return res.json({mess:'login error'})
-                console.log(req.session)
-                return res.json({mess:'hi dev',success:true})
+            if (err) return res.json({ mess: 'login error', success: false })
+            console.log(req.session)
+            return res.json({ mess: 'hi dev', success: true })
         })
     })(req, res, next)
 
+})
+app.get('/logout', (req, res) => {
+    req.logout((err) => {
+        if (err) return res.json({ success: false })
+    })
+    return res.json({ success: true })
 })
 // portfolio
 const portfolio = require('./portfolio/route.js')

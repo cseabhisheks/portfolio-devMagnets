@@ -2,8 +2,10 @@ import { useState } from "react"
 import { FaUser, FaCode } from "react-icons/fa"
 import { useContext } from "react"
 import { isAuthenticated } from "./AuthenticatedContext"
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 export default function Admin() {
+    const navigate = useNavigate()
+    const [LoginErrorMessage, setLoginErrorMessage] = useState()
     const [form, setForm] = useState({
         username: "",
         password: ''
@@ -17,7 +19,7 @@ export default function Admin() {
         console.log(form)
 
     }
-    const {AdminStatus,setAdminStatus} = useContext(isAuthenticated)
+    const { AdminStatus, setAdminStatus } = useContext(isAuthenticated)
     const submit = async (e) => {
         e.preventDefault()
         const backend = import.meta.env.VITE_BACKEND
@@ -31,12 +33,18 @@ export default function Admin() {
         })
         const res = await req.json()
         console.log(res)
-        setAdminStatus(res.success)
-        console.log(AdminStatus)
-        if(AdminStatus){
-            <Navigate to='/' />
+        if (!res.success) {
+            setLoginErrorMessage(res.mess)
+            setTimeout(() => setLoginErrorMessage(''), 1500)
         }
-        
+        else {
+            setAdminStatus(res.success)
+            navigate('/')
+        }
+
+
+
+
 
     }
     return (<>
@@ -50,6 +58,9 @@ export default function Admin() {
                     <div className="w-10 h-10 bg-dark  flex items-center justify-center"><FaCode className="text-lg " /></div>
                     <input className="bg-darkGray w-full h-10 pl-4" type="text" onInput={change} name="password" id="password" placeholder="password" />
                 </label>
+                {LoginErrorMessage &&
+                    <div className="text-center text-xs text-red-400 w-fit capitalize font-semibold border-b-2 border-red-200 m-auto ">{LoginErrorMessage}</div>
+                }
                 <button type="submit" className="bg-yellow-500 w-fit px-7 py-2 rounded-xl m-auto">Login to Admin panel</button>
             </form>
         </div>

@@ -9,7 +9,7 @@ import Donation from "./pages/donation/Donate"
 import MentorShip from "./pages/mentorship/Mentorship"
 import Mails from "./pages/mails/Mails"
 import Admin from "./admin/Admin"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { isAuthenticated } from "./admin/AuthenticatedContext.js"
 import { useState } from "react"
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
             <Route path='/contact' element={<Contact />} />
             <Route path='/donate' element={<Donation />} />
             <Route path='/mentorship' element={<MentorShip />} />
-            <Route path='/mails' element={<Mails />} />
+            <Route path='/mails' element={AdminStatus?<Mails/>:<Navigate to='/admin'/>} />
             <Route path='/admin' element={<Admin />} />
             <Route path='*' element={<><div>page is under construction</div></>} />
           </Route>

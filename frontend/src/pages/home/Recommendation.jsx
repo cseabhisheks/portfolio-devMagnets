@@ -191,7 +191,7 @@ export default function Recommendation() {
                                             <img className="w-full h-full object-cover" src={item.img} alt="" />
                                         </div>
                                     </div>
-                                    <p className="text-textSecondary">{item.description}</p>
+                                    <p className="text-textSecondary h-[50px] overflow-hidden hover:h-fit">{item.description}</p>
                                     <div className="flex gap-1 w-fit px-2 py-1 rounded-2xl bg-dark">
                                         {star(item.rate)}
                                     </div>

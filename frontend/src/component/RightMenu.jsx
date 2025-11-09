@@ -2,8 +2,11 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { useState } from "react"
 import { MdMenu, MdClose } from 'react-icons/md'
+import { useContext } from 'react'
+import { isAuthenticated } from '../admin/AuthenticatedContext'
 export default function RightMenu() {
 
+    const { AdminStatus, setAdminStatus } = useContext(isAuthenticated)
     const pathname = useLocation().pathname
     const page = pathname == '/' ? 'home' : pathname.replace('/', '')
 
@@ -47,12 +50,31 @@ export default function RightMenu() {
                                     <NavLink to='/mentorship' className={({ isActive }) => (isActive ? 'text-[white]  font-semibold' : '')}>MentorShip</NavLink>
                                 </ul>
                             </div>
-                            <hr className="bg-textSecondary w-full h-[1px] my-5" />
-                            <div className=" w-full p-5 text-sm ">
-                                <ul className="flex flex-col gap-2 ">
-                                    <NavLink to='/mails' className={({ isActive }) => (isActive ? 'text-white  font-semibold ' : '')}>Mails</NavLink>
-                                </ul>
-                            </div>
+                            {AdminStatus &&
+                                <> <hr className="bg-textSecondary w-full h-[1px] my-5" />
+                                    <div className=" w-full p-5 text-sm ">
+                                        <ul className="flex flex-col gap-2 ">
+                                            <NavLink to='/mails' className={({ isActive }) => (isActive ? 'text-white  font-semibold ' : '')}>Mails</NavLink>
+                                        </ul>
+                                    </div>
+                                    <hr className="bg-textSecondary w-full h-[1px] my-5" />
+                                    <div className=" w-fit p-5 text-sm">
+                                        <ul className="flex flex-col gap-2 ">
+                                            <button className=' capitalize bg-accent rounded-xl px-5 py-2 text-dark hover:scale-110' onClick={
+                                                async () => {
+                                                    const req = await fetch(`${import.meta.env.VITE_BACKEND}/logout`)
+                                                    const res = await req.json()
+                                                    if (res.success) {
+                                                        setAdminStatus(false)
+                                                    }
+                                                    else {
+                                                        alert('Error while logout')
+                                                    }
+                                                }
+                                            }>Logout</button>
+                                        </ul>
+                                    </div>
+                                </>}
                         </div>
                     </>
                 }
