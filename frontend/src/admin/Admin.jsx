@@ -4,6 +4,7 @@ import { useContext } from "react"
 import { isAuthenticated } from "./AuthenticatedContext"
 import { useNavigate } from "react-router-dom"
 export default function Admin() {
+    const [loginState, setLoginState] = useState('login to admin pannel')
     const navigate = useNavigate()
     const [LoginErrorMessage, setLoginErrorMessage] = useState()
     const [form, setForm] = useState({
@@ -22,6 +23,7 @@ export default function Admin() {
     const { AdminStatus, setAdminStatus } = useContext(isAuthenticated)
     const submit = async (e) => {
         e.preventDefault()
+        setLoginState('checking your credential .....')
         const backend = import.meta.env.VITE_BACKEND
         const req = await fetch(`${backend}/admin`, {
             method: 'POST',
@@ -39,6 +41,7 @@ export default function Admin() {
             setTimeout(() => setLoginErrorMessage(''), 1500)
         }
         else {
+            setLoginState('you are being redirected to admin version ')
             setAdminStatus(res.success)
             navigate('/')
         }
