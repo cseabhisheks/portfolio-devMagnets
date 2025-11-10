@@ -80,7 +80,7 @@ export default function Service() {
                 <div className=" grid grid-cols-1 lg:grid-cols-3 gap-5 ">
                     {
                         FetchServices.map((e, idx) => (
-                            <div key={idx} className=" flex flex-col gap-4 p-8 text-sm bg-white/10 hover-effect  border-2 min-h-[200px] ">
+                            <div key={idx} className=" flex flex-col gap-4 p-8 text-sm bg-white/10 hover-effect   min-h-[200px] ">
                                 <h1 className="text-textPrimary">{e.title}</h1>
                                 <p className="text-textSecondary  h-[50px] overflow-hidden hover:h-fit">{e.description}</p>
                                 <a href="/contact" className="w-fit text-accent uppercase hover:border-b-2 border-accent">order now &gt;</a>

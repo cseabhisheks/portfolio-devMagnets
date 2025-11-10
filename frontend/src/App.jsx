@@ -11,10 +11,20 @@ import Mails from "./pages/mails/Mails"
 import Admin from "./admin/Admin"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { isAuthenticated } from "./admin/AuthenticatedContext.js"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import PR from "./ProtectedRoute.jsx/PR.jsx"
 export default function App() {
   const [AdminStatus, setAdminStatus] = useState(false)
+  useEffect(() => {
+    const backend = import.meta.env.VITE_BACKEND
+    fetch(`${backend}/check`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(data => setAdminStatus(data.loggedIn))
+      .catch(() => setAdminStatus(false))
+  }, [])
   return (<>
 
     <isAuthenticated.Provider value={{ AdminStatus, setAdminStatus }}>
@@ -28,9 +38,9 @@ export default function App() {
             <Route path='/contact' element={<Contact />} />
             <Route path='/donate' element={<Donation />} />
             <Route path='/mentorship' element={<MentorShip />} />
-            <Route element={<PR/>}>
-               <Route path='/mails' element={ <Mails />   } />
-            </Route>             
+            <Route element={<PR />}>
+              <Route path='/mails' element={<Mails />} />
+            </Route>
             <Route path='/admin' element={<Admin />} />
             <Route path='*' element={<><div>page is under construction</div></>} />
           </Route>

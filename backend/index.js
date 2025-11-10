@@ -14,7 +14,8 @@ app.use(express.json())
 // cors policy
 const cors = require('cors')
 app.use(cors({
-    origin: '*'
+    origin: process.env.FRONTEND,
+    credentials:true
 }))
 // dummy data for authentication
 const user = { name: 'abhishek', password: '1234', id: '1' }
@@ -23,7 +24,10 @@ const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
 const session = require('express-session')
 app.use(session({
-    secret: "abhi@123"
+    resave:false,
+    saveUninitialized:false,
+    secret: "abhi@123",
+    cookie:{secure:false,maxAge:1000*60*60}//1hr
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -48,6 +52,7 @@ app.post('/admin', (req, res, next) => {
         req.logIn(user, (err) => {
             if (err) return res.json({ mess: 'login error', success: false })
             console.log(req.session)
+        console.log(res.cookie)
             return res.json({ mess: 'hi dev', success: true })
         })
     })(req, res, next)
@@ -59,6 +64,14 @@ app.get('/logout', (req, res) => {
     })
     return res.json({ success: true })
 })
+app.get('/check', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.json({ loggedIn: true, user: req.user });
+  } else {
+    return res.json({ loggedIn: false });
+  }
+});
+
 // portfolio
 const portfolio = require('./portfolio/route.js')
 app.use('/portfolio', portfolio)

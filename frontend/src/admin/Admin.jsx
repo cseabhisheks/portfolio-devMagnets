@@ -25,6 +25,7 @@ export default function Admin() {
         const backend = import.meta.env.VITE_BACKEND
         const req = await fetch(`${backend}/admin`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -41,11 +42,6 @@ export default function Admin() {
             setAdminStatus(res.success)
             navigate('/')
         }
-
-
-
-
-
     }
     return (<>
         <div className="absolute w-[100vw] h-[100vh] z-[122] flex justify-center items-center bg-dark top-0  border-2 left-0">
