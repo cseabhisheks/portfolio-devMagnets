@@ -38,6 +38,7 @@ export default function Service() {
 
 
     const add = () => {
+        setModify()
         setFormOpen(true)
         setServiceData({ title: '', description: '' })
     }

@@ -17,11 +17,6 @@ app.use(cors({
     origin: process.env.FRONTEND,
     credentials:true
 }))
-// dummy data for authentication
-const user = { name: 'abhishek', password: '1234', id: '1' }
-// authentication
-const passport = require('passport')
-const localStrategy = require('passport-local').Strategy
 const session = require('express-session')
 app.use(session({
     resave:false,
@@ -29,48 +24,14 @@ app.use(session({
     secret: "abhi@123",
     cookie:{secure:false,maxAge:1000*60*60}//1hr
 }))
+// authenticate
+const passport=require('./authentication/config.js')
+const admin=require('./authentication/route.js')
 app.use(passport.initialize())
 app.use(passport.session())
-const field = {
-    usernameField: 'username',
-    passwordField: 'password'
-}
-const validate = (username, password, done) => {
-    if (username != user.name || password != user.password) return done(null, false, { mess: 'either username is wrong or password! 🥲' })
-    return done(null, user)
-}
-passport.use(new localStrategy(field, validate))
+app.use('/admin',admin)
 
-passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser(async (id, done) => {
-    if (user.id == id) return done(null, user)
-})
-app.post('/admin', (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
-        if (err) return res.json({ mess: "server error", success: false })
-        if (!user) return res.json({ mess: info.mess, success: false })
-        req.logIn(user, (err) => {
-            if (err) return res.json({ mess: 'login error', success: false })
-            console.log(req.session)
-        console.log(res.cookie)
-            return res.json({ mess: 'hi dev', success: true })
-        })
-    })(req, res, next)
 
-})
-app.get('/logout', (req, res) => {
-    req.logout((err) => {
-        if (err) return res.json({ success: false })
-    })
-    return res.json({ success: true })
-})
-app.get('/check', (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.json({ loggedIn: true, user: req.user });
-  } else {
-    return res.json({ loggedIn: false });
-  }
-});
 
 // portfolio
 const portfolio = require('./portfolio/route.js')

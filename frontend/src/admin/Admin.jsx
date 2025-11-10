@@ -25,7 +25,7 @@ export default function Admin() {
         e.preventDefault()
         setLoginState('checking your credential .....')
         const backend = import.meta.env.VITE_BACKEND
-        const req = await fetch(`${backend}/admin`, {
+        const req = await fetch(`${backend}/admin/login`, {
             method: 'POST',
             credentials: 'include',
             headers: {

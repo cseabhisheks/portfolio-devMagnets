@@ -17,7 +17,7 @@ export default function App() {
   const [AdminStatus, setAdminStatus] = useState(false)
   useEffect(() => {
     const backend = import.meta.env.VITE_BACKEND
-    fetch(`${backend}/check`, {
+    fetch(`${backend}/admin/isAuthenticated`, {
       method: 'GET',
       credentials: 'include'
     })
