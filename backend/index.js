@@ -18,12 +18,11 @@ app.use(cors({
     credentials:true
 }))
 const session = require('express-session')
-const isProduction = process.env.NODE_ENV === "production";
 app.use(session({
     resave:false,
     saveUninitialized:false,
     secret: "abhi@123",
-    cookie:{secure:isProduction,maxAge:1000*60*60}//1hr
+    cookie:{secure:true,maxAge:1000*60*60}//1hr
 }))
 // authenticate
 const passport=require('./authentication/config.js')
