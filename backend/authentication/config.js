@@ -10,7 +10,7 @@ const field = {
 }
 
 const validate = (username, password, done) => {
-    if (username != user.name || password != user.password) return done(null, false, { mess: 'either username is wrong or password! 🥲' })
+    if (username != user.name || password != user.password) return done(null, false, { mess: 'either username is wrong or password! 🥲,you can try again' })
     return done(null, user)
 }
 passport.use(new localStrategy(field, validate))

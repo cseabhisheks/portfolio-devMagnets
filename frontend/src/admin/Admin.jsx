@@ -22,28 +22,32 @@ export default function Admin() {
     }
     const { AdminStatus, setAdminStatus } = useContext(isAuthenticated)
     const submit = async (e) => {
-        e.preventDefault()
-        setLoginState('checking your credential .....')
-        const backend = import.meta.env.VITE_BACKEND
-        const req = await fetch(`${backend}/admin/login`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
+        try {
+            e.preventDefault()
+            setLoginState('checking your credential .....')
+            const backend = import.meta.env.VITE_BACKEND
+            const req = await fetch(`${backend}/admin/login`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
 
-        })
-        const res = await req.json()
-        console.log(res)
-        if (!res.success) {
-            setLoginErrorMessage(res.mess)
-            setTimeout(() => setLoginErrorMessage(''), 1500)
-        }
-        else {
-            setLoginState('you are being redirected to admin version ')
-            setAdminStatus(res.success)
-            navigate('/')
+            })
+            const res = await req.json()
+            if (!res.success) {
+                setLoginErrorMessage(res.mess)
+                setLoginState('login to admin panel')
+                setTimeout(() => setLoginErrorMessage(''), 1500)
+            }
+            else {
+                setLoginState('you are being redirected to admin version ')
+                setAdminStatus(res.success)
+                navigate('/')
+            }
+        } catch (err) {
+            setLoginErrorMessage(err.message)
         }
     }
     return (<>
@@ -60,7 +64,7 @@ export default function Admin() {
                 {LoginErrorMessage &&
                     <div className="text-center text-xs text-red-400 w-fit capitalize font-semibold border-b-2 border-red-200 m-auto ">{LoginErrorMessage}</div>
                 }
-                <button type="submit" className="bg-yellow-500 w-fit px-7 py-2 rounded-xl m-auto">Login to Admin panel</button>
+                <button type="submit" className="bg-yellow-500 w-fit px-7 py-2 rounded-xl m-auto">{loginState}</button>
             </form>
         </div>
     </>)
