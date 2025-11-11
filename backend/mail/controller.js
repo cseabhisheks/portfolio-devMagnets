@@ -15,9 +15,11 @@ const contact = async (req, res) => {
 
         }
         const mailresponse = await Sendmail(mssg)
+        console.log('message send')
         res.json({ success: true, mailresponse })
     } catch (err) {
         res.json({ err, success: false })
+        console.log('message cant send')
     }
 }
 const donate = async (req, res) => {
