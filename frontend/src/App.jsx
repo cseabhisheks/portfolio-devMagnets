@@ -14,17 +14,40 @@ import { isAuthenticated } from "./admin/AuthenticatedContext.js"
 import { useState,useEffect } from "react"
 import PR from "./ProtectedRoute.jsx/PR.jsx"
 export default function App() {
-  const [AdminStatus, setAdminStatus] = useState(false)
+  // const [AdminStatus, setAdminStatus] = useState(false)
+  // useEffect(() => {
+  //   const backend = import.meta.env.VITE_BACKEND
+  //   fetch(`${backend}/admin/isAuthenticated`, {
+  //     method: 'GET',
+  //     credentials: 'include'
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => setAdminStatus(data.loggedIn))
+  //     .catch(() => setAdminStatus(false))
+  // }, [])
+    const [AdminStatus, setAdminStatus] = useState(false);
+  const [loading, setLoading] = useState(true); // 👈 new
+
   useEffect(() => {
-    const backend = import.meta.env.VITE_BACKEND
+    const backend = import.meta.env.VITE_BACKEND;
     fetch(`${backend}/admin/isAuthenticated`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
     })
       .then(res => res.json())
-      .then(data => setAdminStatus(data.loggedIn))
-      .catch(() => setAdminStatus(false))
-  }, [])
+      .then(data => {
+        setAdminStatus(data.loggedIn);
+        setLoading(false);
+      })
+      .catch(() => {
+        setAdminStatus(false);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="text-center text-white">Checking session...</div>;
+  }
   return (<>
 
     <isAuthenticated.Provider value={{ AdminStatus, setAdminStatus }}>
