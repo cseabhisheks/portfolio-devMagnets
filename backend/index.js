@@ -22,7 +22,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     secret: "abhi@123",
-    cookie:{secure:true,maxAge:1000*60*60}//1hr
+    cookie:{secure:process.env.http,maxAge:1000*60*60}//1hr
 }))
 // authenticate
 const passport=require('./authentication/config.js')
