@@ -20,7 +20,7 @@ app.use(cors({
 const session = require('express-session')
 
 const isProduction = process.env.NODE_ENV === 'production';
-
+app.set('trust proxy', 1); // trust first proxy
 app.use(session({
   resave: false,
   saveUninitialized: false,
