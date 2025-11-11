@@ -61,14 +61,18 @@ export default function Recommendation() {
     };
 
     const remove = async (id) => {
-        await removeService(`${backend}/recommendation/remove`, id);
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this recommendation card?"
+        );
+        if (!confirmDelete) return;
+        await removeService(`${backend}/recommendation/remove`, id, 'recommendation');
         fetchAllServiceCard();
     };
 
     // ====== FORM SUBMIT ======
     const submit = async (e) => {
         e.preventDefault();
-        await addService(`${backend}/recommendation`, isModify, setModify, ServiceData);
+        await addService(`${backend}/recommendation`, isModify, setModify, ServiceData, 'recommendation');
         setFormOpen(false);
         fetchAllServiceCard();
     };
@@ -144,12 +148,13 @@ export default function Recommendation() {
     };
 
 
- const Admin = useContext(isAuthenticated).AdminStatus
+    const Admin = useContext(isAuthenticated).AdminStatus
     // ====== RENDER ======
     return (
         <>
             {isFormOpen && (
                 <ServiceTemplate
+                    actionText={`${isModify ? 'Modify' : 'add'} recommendation card`}
                     setFormOpen={setFormOpen}
                     onChange={onChange}
                     field={field}
@@ -191,7 +196,7 @@ export default function Recommendation() {
                                             <img className="w-full h-full object-cover" src={item.img} alt="" />
                                         </div>
                                     </div>
-                                    <p className="text-textSecondary h-[50px] overflow-hidden hover:h-fit">{item.description}</p>
+                                    <p className="text-textSecondary h-[75px] overflow-hidden rounded-xl bg-white/20 p-2">{item.description}</p>
                                     <div className="flex gap-1 w-fit px-2 py-1 rounded-2xl bg-dark">
                                         {star(item.rate)}
                                     </div>

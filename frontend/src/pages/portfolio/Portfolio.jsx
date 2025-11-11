@@ -43,7 +43,7 @@ export default function Portfolio() {
     // Delete project
     const deleteProject = async (id) => {
         const confirmDelete = window.confirm(
-            "Are you sure you want to delete this project?"
+            "Are you sure you want to delete this portfolio card?"
         );
         if (!confirmDelete) return;
 
@@ -53,7 +53,7 @@ export default function Portfolio() {
             });
             const res = await req.json();
             if (res.success) {
-                alert("Project deleted");
+                alert("Project is deleted");
                 fetchProjects();
             } else {
                 alert("Error deleting project from database");
@@ -212,7 +212,7 @@ export default function Portfolio() {
                                 {isProjectHover === idx && (
                                     <div className="font-semibold min-h-[50px] p-5 absolute bottom-0 bg-dark/70 w-full">
                                         <h1>{project.title}</h1>
-                                        <div className="text-xs text-gray-400 h-[25px] overflow-hidden hover:h-fit">
+                                        <div className="text-xs m-2 text-gray-400   h-[75px] overflow-hidden rounded-xl bg-white/20 p-2">
                                             {project.description}
                                         </div>
                                         <a

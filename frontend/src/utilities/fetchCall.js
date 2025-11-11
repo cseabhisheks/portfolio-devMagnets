@@ -1,4 +1,4 @@
-const addService = async (URL, isModify, setModify, UserInputData) => {
+const addService = async (URL, isModify, setModify, UserInputData,work) => {
     const backend = import.meta.env.VITE_BACKEND
     try {
         const isAdd = !isModify ? '/add' : '/modify'
@@ -15,11 +15,11 @@ const addService = async (URL, isModify, setModify, UserInputData) => {
         })
         const res = await req.json()
         if (res.success) {
-            if (isAdd) {
-                alert('service is added')
+            if (!isModify) {
+                alert(`${work} card is added`)
             }
             else {
-                alert('service is update')
+                alert(`${work} card is updated`)
                 setModify(false)
             }
 
@@ -49,7 +49,7 @@ const FetchService = async (URL, setData) => {
     }
 }
 
-const removeService = async (URL, id) => {
+const removeService = async (URL, id,work) => {
 
     try {
         const req = await fetch(`${URL}/${id}`, {
@@ -57,7 +57,7 @@ const removeService = async (URL, id) => {
         })
         const res = await req.json()
         if (res.success) {
-            alert('service is deleted')
+            alert(`${work} card is deleted`)
         } else {
             console.log(res.err)
         }

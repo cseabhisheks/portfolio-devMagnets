@@ -6,7 +6,7 @@ export default function Form({ onSubmit, actionText,onChange, fields, setFormOpe
         <div className="bg-dark/70 backdrop-blur-lg w-full h-full inset-0 absolute z-[119]"></div>
         <form onSubmit={onSubmit} className="mb-5 bg-card p-5 gap-5 md:gap-10 min-h-[49vh] flex flex-col absolute h-fit md:w-[50vw] inset-0 m-10 md:m-auto z-[120]">
             <div className="flex justify-between capitalize text-xl md:text-2xl text-gray-300 items-center">
-                <h1>add service</h1>
+                <h1>{actionText}</h1>
                 <MdClose className="w-6 h-6 hover:bg-gray-400/20 hover:text-dark rounded-xl cursor-pointer" onClick={() => setFormOpen(false)} />
             </div>
             {fields.map((field, idx) => (

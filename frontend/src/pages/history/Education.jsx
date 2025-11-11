@@ -41,6 +41,7 @@ export default function Education() {
 
 
     const add = () => {
+           setModify()
         setFormOpen(true)
         setServiceData({ title: '', description: '' })
     }
@@ -50,29 +51,33 @@ export default function Education() {
         setFormOpen(true)
     }
     const remove = async (id) => {
-        await removeService(`${backend}/education/remove`, id)
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this education card?"
+        );
+        if (!confirmDelete) return;
+        await removeService(`${backend}/education/remove`, id, 'education')
         fetchAllServiceCard()
     }
 
     // on submit for add or modfying data
     const submit = async (e) => {
         e.preventDefault()
-        await addService(`${backend}/education`, isModify, setModify, ServiceData)
+        await addService(`${backend}/education`, isModify, setModify, ServiceData, 'education')
         setFormOpen(false)
         fetchAllServiceCard()
     }
-     const Admin = useContext(isAuthenticated).AdminStatus
+    const Admin = useContext(isAuthenticated).AdminStatus
     return (<>
-        {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} field={field} onChange={onChange} onSubmit={submit} data={ServiceData} />}
+        {isFormOpen && <ServiceTemplate actionText={`${isModify?'Modify':'add'} education card`} setFormOpen={setFormOpen} field={field} onChange={onChange} onSubmit={submit} data={ServiceData} />}
 
         <div className=" w-full mt-5 capitalize relative ">
 
 
             <div className="text-xl text-textPrimary capitalize mb-5">Education</div>
             {Admin &&
-            <div className="w-fit mb-5">
-                <Btn color='green' text="add" onClick={add} />
-            </div>
+                <div className="w-fit mb-5">
+                    <Btn color='green' text="add" onClick={add} />
+                </div>
             }
             {FetchServices.length == 0 ?
                 <div className="text-white text-center">no education 🥲</div> :
@@ -94,13 +99,13 @@ export default function Education() {
                                     <span className="w-3 h-3 rounded-full bg-black"></span>
                                 </span>
                             </div>
-                            <p className="text-textSecondary h-[50px] overflow-hidden hover:h-fit">{education.description}</p>
+                            <p className="text-textSecondary h-[75px] overflow-hidden rounded-xl bg-white/20 p-2">{education.description}</p>
                             <button type="button" className="w-fit text-accent uppercase">{education.educationQualification} &gt;</button>
-                           {Admin&&
-                            <div className="flex justify-between">
-                                <Btn color='red' text="delete" onClick={() => remove(education._id)} />
-                                <Btn color='orange' text="modify" onClick={() => modify(education._id)} />
-                            </div>
+                            {Admin &&
+                                <div className="flex justify-between">
+                                    <Btn color='red' text="delete" onClick={() => remove(education._id)} />
+                                    <Btn color='orange' text="modify" onClick={() => modify(education._id)} />
+                                </div>
                             }
                         </div>
                     ))}

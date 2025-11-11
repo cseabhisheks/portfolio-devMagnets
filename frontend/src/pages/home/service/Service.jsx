@@ -48,14 +48,18 @@ export default function Service() {
         setFormOpen(true)
     }
     const remove = async (id) => {
-        await removeService(`${backend}/service/remove`, id)
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this service card?"
+        );
+        if (!confirmDelete) return;
+        await removeService(`${backend}/service/remove`, id, 'service')
         fetchAllServiceCard()
     }
 
     // on submit for add or modfying data
     const submit = async (e) => {
         e.preventDefault()
-        await addService(`${backend}/service`, isModify, setModify, ServiceData)
+        await addService(`${backend}/service`, isModify, setModify, ServiceData, 'service')
         setFormOpen(false)
         fetchAllServiceCard()
     }
@@ -63,7 +67,7 @@ export default function Service() {
     console.log(Admin)
 
     return (<>
-        {isFormOpen && <ServiceTemplate setFormOpen={setFormOpen} onChange={onChange} field={field} onSubmit={submit} data={ServiceData} />}
+        {isFormOpen && <ServiceTemplate actionText={`${isModify ? 'Modify' : 'add'} service card`} setFormOpen={setFormOpen} onChange={onChange} field={field} onSubmit={submit} data={ServiceData} />}
 
         <div className=" w-full mt-5 capitalize relative ">
 
@@ -83,7 +87,7 @@ export default function Service() {
                         FetchServices.map((e, idx) => (
                             <div key={idx} className=" flex flex-col gap-4 p-8 text-sm bg-white/10 hover-effect   min-h-[200px] ">
                                 <h1 className="text-textPrimary">{e.title}</h1>
-                                <p className="text-textSecondary  h-[50px] overflow-hidden hover:h-fit">{e.description}</p>
+                                <p className="text-textSecondary  h-[75px] overflow-hidden rounded-xl bg-white/20 p-2">{e.description}</p>
                                 <a href="/contact" className="w-fit text-accent uppercase hover:border-b-2 border-accent">order now &gt;</a>
 
                                 {Admin && <>
