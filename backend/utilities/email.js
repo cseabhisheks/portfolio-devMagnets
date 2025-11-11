@@ -9,6 +9,8 @@ const transporter = nodemailer.createTransport({
 })
 const sendEmail = async (message) => {
 
+    console.log(process.env.MAIL)
+    console.log(process.env.MAIL_PASSWORD)
     const info = await transporter.sendMail(message)
     console.log(info)
     return info.response;
