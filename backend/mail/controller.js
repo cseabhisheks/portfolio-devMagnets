@@ -19,7 +19,7 @@ const contact = async (req, res) => {
         res.json({ success: true, mailresponse })
     } catch (err) {
         res.json({ err, success: false })
-        console.log('message cant send')
+        console.log(err)
     }
 }
 const donate = async (req, res) => {
