@@ -2,7 +2,8 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
 
-const user={name:'abhishek',password:'1234',id:2030}
+const user={name:process.env.ADMINNAME,password:process.env.ADMINPASSWORD,id:2030}
+
 
 const field = {
     usernameField: 'username',
