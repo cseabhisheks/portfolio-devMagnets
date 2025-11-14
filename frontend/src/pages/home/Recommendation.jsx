@@ -7,9 +7,13 @@ import { FetchService, removeService, FetchServiceOne, addService } from "../../
 import { isAuthenticated } from "../../admin/AuthenticatedContext";
 import { useContext } from "react";
 import Btn from "../../utilities/Btn";
+import { cloudUpload } from "../../utilities/cloudinary";
 
 export default function Recommendation() {
     const backend = import.meta.env.VITE_BACKEND;
+
+
+  
 
     // ====== STATES ======
     const [isFormOpen, setFormOpen] = useState(false);
@@ -28,7 +32,7 @@ export default function Recommendation() {
         { name: "name", type: "text", Icon: MdTitle },
         { name: "description", type: "text", Icon: MdDescription },
         { name: "designation", type: "text", Icon: MdTitle },
-        { name: "img", type: "text", Icon: MdDescription },
+        { name: "img", type: "file", Icon: MdDescription },
         { name: "rate", type: "number", Icon: MdTitle },
     ];
 
@@ -43,8 +47,9 @@ export default function Recommendation() {
 
     // ====== INPUT CHANGE ======
     const onChange = (e) => {
-        const { name, value } = e.target;
-        setServiceData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, files } = e.target;
+        setServiceData((prev) => ({ ...prev, [name]: type == 'file' ? files[0] : value }));
+        console.log(ServiceData)
     };
 
     // ====== ADD / MODIFY FORM HANDLERS ======
@@ -72,6 +77,12 @@ export default function Recommendation() {
     // ====== FORM SUBMIT ======
     const submit = async (e) => {
         e.preventDefault();
+        console.log(ServiceData.img)
+
+        const { secure_url, public_id } =await cloudUpload(ServiceData.img)
+        console.log({ secure_url, public_id } )
+        ServiceData.img=secure_url
+        
         await addService(`${backend}/recommendation`, isModify, setModify, ServiceData, 'recommendation');
         setFormOpen(false);
         fetchAllServiceCard();
@@ -169,7 +180,7 @@ export default function Recommendation() {
                         <Btn color="green" text="add" onClick={add} />
                     </div>
                 }
-                <div className="text-xl text-textPrimary capitalize">Recommendations</div>
+                <div className="text-xl text-textPrimary capitalize h-[50px]">Recommendations</div>
 
                 {/* ====== CARDS CONTAINER ====== */}
                 <div

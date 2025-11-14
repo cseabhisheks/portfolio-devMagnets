@@ -80,12 +80,11 @@ export default function AddProject({
           </div>
           <input
             className="bg-darkGray w-full h-10 pl-4 text-white/80"
-            type="text"
+            type="file"
             onChange={onChange}
             name="img"
             id="img"
-            placeholder="Image URL"
-            value={Project.img || ""}
+
           />
         </label>
 

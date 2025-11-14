@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import AddProject from "./AddProject";
 import { isAuthenticated } from "../../admin/AuthenticatedContext";
 import { useContext } from "react";
+import { cloudUpload } from "../../utilities/cloudinary";
 export default function Portfolio() {
     const [isProjectHover, setProjectHover] = useState(null);
     const [projects, setProjects] = useState([]);
     const backend = import.meta.env.VITE_BACKEND
     const [filter, setFilter] = useState('')
+
     const changeFilter = (x) => {
         setFilter(x)
     }
@@ -75,8 +77,8 @@ export default function Portfolio() {
     const [modify, setModify] = useState(null);
 
     const onChange = (e) => {
-        const { name, value } = e.target;
-        setProjectDetail((prev) => ({ ...prev, [name]: value }));
+        const { name, value ,files,type} = e.target;
+        setProjectDetail((prev) => ({ ...prev, [name]: type == 'file' ? files[0] : value }));
     };
 
     // Fetch single project for modification
@@ -102,6 +104,11 @@ export default function Portfolio() {
     // Add or modify project submit
     const addProjectsOnSubmit = async (e) => {
         e.preventDefault();
+        console.log(Project.img)
+
+        const { secure_url, public_id } = await cloudUpload(Project.img)
+        console.log({ secure_url, public_id })
+        Project.img = secure_url
         const endPoint = selectProject === "new project" ? "add" : "modify";
         const method = selectProject === "new project" ? "POST" : "PATCH";
         const data =
@@ -174,24 +181,24 @@ export default function Portfolio() {
                 </ul>
 
                 {/* Add Button */}
-                {Admin&&
-                <div className="mx-auto text-xs text-green-60 flex justify-end items-end w-full m-5">
-                    <div
-                        className="bg-green-400 px-8 py-2 rounded-3xl hover:bg-green-600 hover:text-green-400 cursor-pointer"
-                        onClick={() => {
-                            setProjectDetail({
-                                title: "",
-                                description: "",
-                                category: "",
-                                link: "",
-                                img: "",
-                            });
-                            setSelectProject("new project");
-                        }}
-                    >
-                        add
+                {Admin &&
+                    <div className="mx-auto text-xs text-green-60 flex justify-end items-end w-full m-5">
+                        <div
+                            className="bg-green-400 px-8 py-2 rounded-3xl hover:bg-green-600 hover:text-green-400 cursor-pointer"
+                            onClick={() => {
+                                setProjectDetail({
+                                    title: "",
+                                    description: "",
+                                    category: "",
+                                    link: "",
+                                    img: "",
+                                });
+                                setSelectProject("new project");
+                            }}
+                        >
+                            add
+                        </div>
                     </div>
-                </div>
                 }
 
                 {/* Project Cards */}
@@ -222,25 +229,25 @@ export default function Portfolio() {
                                             link &gt;
                                         </a>
 
-                                    {Admin &&
-                                        <div className="flex">
-                                            <div
-                                                className="mx-auto text-xs text-red-600 bg-red-400 w-fit px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-red-400 cursor-pointer"
-                                                onClick={() => deleteProject(project._id)}
-                                            >
-                                                delete
+                                        {Admin &&
+                                            <div className="flex">
+                                                <div
+                                                    className="mx-auto text-xs text-red-600 bg-red-400 w-fit px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-red-400 cursor-pointer"
+                                                    onClick={() => deleteProject(project._id)}
+                                                >
+                                                    delete
+                                                </div>
+                                                <div
+                                                    className="mx-auto text-xs text-orange-600 bg-orange-400 w-fit px-4 py-2 rounded-3xl hover:bg-orange-600 hover:text-orange-400 cursor-pointer"
+                                                    onClick={async () => {
+                                                        setModify(project._id);
+                                                        await modifiedfetchProjects(project._id);
+                                                        setSelectProject("modify project");
+                                                    }}
+                                                >
+                                                    modify
+                                                </div>
                                             </div>
-                                            <div
-                                                className="mx-auto text-xs text-orange-600 bg-orange-400 w-fit px-4 py-2 rounded-3xl hover:bg-orange-600 hover:text-orange-400 cursor-pointer"
-                                                onClick={async () => {
-                                                    setModify(project._id);
-                                                    await modifiedfetchProjects(project._id);
-                                                    setSelectProject("modify project");
-                                                }}
-                                            >
-                                                modify
-                                            </div>
-                                        </div>
                                         }
                                     </div>
                                 )}

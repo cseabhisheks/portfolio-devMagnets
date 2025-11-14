@@ -1,6 +1,6 @@
 import { MdClose } from "react-icons/md"
 import InputTag from "./InputTag"
-export default function Form({ onSubmit, actionText,onChange, fields, setFormOpen,data }) {
+export default function Form({ onSubmit, actionText, onChange, fields, setFormOpen, data }) {
 
     return (<>
         <div className="bg-dark/70 backdrop-blur-lg w-full h-full inset-0 absolute z-[119]"></div>
@@ -11,7 +11,14 @@ export default function Form({ onSubmit, actionText,onChange, fields, setFormOpe
             </div>
             {fields.map((field, idx) => (
                 <div key={idx}>
-                    <InputTag name={field.name} type={field.type} onChange={onChange} Icon={field.Icon} value={data[field.name]} />
+                    {field.type == 'file' ?
+                        <>
+                            <InputTag name={field.name} type={field.type} onChange={onChange} Icon={field.Icon} />
+                           {/* { data[field.name] &&<img className="w-[30%] h-[30%] m-auto mt-4" src={URL.createObjectURL(data[field.picture])} alt="" />} */}
+                        </>
+                        :
+                        <InputTag name={field.name} type={field.type} onChange={onChange} Icon={field.Icon} value={data[field.name]} />
+                    }
                 </div>
             ))}
 
