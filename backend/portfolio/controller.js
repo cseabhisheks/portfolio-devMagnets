@@ -2,10 +2,10 @@
 
 const portfolioModels = require('./model.js')
 const add = async (req, res) => {
-    const { title, description, category, link, img, id } = req.body
+    const { title, description, category, link, img,public_id } = req.body
     try {
         await portfolioModels.create({
-            title, description, category, link, img
+            title, description, category, link, img,public_id
         })
         res.json({ success: true })
     }
@@ -14,12 +14,12 @@ const add = async (req, res) => {
     }
 }
 const modify = async (req, res) => {
-    const { title, description, category, link, img, id } = req.body
+    const { title, description, category, link, img, id,public_id } = req.body
     console.log(req.body)
     try {
         await portfolioModels.findOneAndUpdate({ _id: id }, {
             $set: {
-                title, description, category, link, img
+                title, description, category, link, img,public_id
             }
         })
         res.json({ success: true })

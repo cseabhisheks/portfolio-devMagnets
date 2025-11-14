@@ -13,7 +13,7 @@ export default function Recommendation() {
     const backend = import.meta.env.VITE_BACKEND;
 
 
-  
+
 
     // ====== STATES ======
     const [isFormOpen, setFormOpen] = useState(false);
@@ -22,7 +22,8 @@ export default function Recommendation() {
         description: "",
         designation: "",
         img: "",
-        rate: ""
+        rate: "",
+        public_id: ""
     });
     const [FetchServices, setFetchServices] = useState([]);
     const [isModify, setModify] = useState(null);
@@ -65,11 +66,20 @@ export default function Recommendation() {
         setFormOpen(true);
     };
 
-    const remove = async (id) => {
+    const remove = async (id, public_id) => {
         const confirmDelete = window.confirm(
             "Are you sure you want to delete this recommendation card?"
         );
         if (!confirmDelete) return;
+        try {
+            const del = await fetch(`${backend}/cloudinary/delete/${public_id}`, { method: 'DELETE' })// i need to fetch public id from db so store it 
+            const r = await del.json()
+            console.log(r)
+        }
+        catch (err) {
+            console.log(err)
+
+        }
         await removeService(`${backend}/recommendation/remove`, id, 'recommendation');
         fetchAllServiceCard();
     };
@@ -79,11 +89,14 @@ export default function Recommendation() {
         e.preventDefault();
         console.log(ServiceData.img)
 
-        const { secure_url, public_id } =await cloudUpload(ServiceData.img)
-        console.log({ secure_url, public_id } )
-        ServiceData.img=secure_url
-        
-        await addService(`${backend}/recommendation`, isModify, setModify, ServiceData, 'recommendation');
+        const { secure_url, public_id } = await cloudUpload(ServiceData.img)
+        const payload = {
+            ...ServiceData,
+            img: secure_url,
+            public_id: public_id
+        };
+
+        await addService(`${backend}/recommendation`, isModify, setModify, payload, 'recommendation');
         setFormOpen(false);
         fetchAllServiceCard();
     };
@@ -214,7 +227,7 @@ export default function Recommendation() {
 
                                     {Admin && <>
                                         <div className="flex justify-between">
-                                            <Btn color="red" text="delete" onClick={() => remove(item._id)} />
+                                            <Btn color="red" text="delete" onClick={() => remove(item._id, item.public_id)} />
                                             <Btn color="orange" text="modify" onClick={() => modify(item._id)} />
                                         </div>
                                     </>}

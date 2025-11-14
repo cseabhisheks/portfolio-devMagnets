@@ -43,11 +43,12 @@ export default function Portfolio() {
     const [isAdmin] = useState(true);
 
     // Delete project
-    const deleteProject = async (id) => {
+    const deleteProject = async (id,public_id) => {
         const confirmDelete = window.confirm(
             "Are you sure you want to delete this portfolio card?"
         );
         if (!confirmDelete) return;
+        const del = await fetch(`${backend}/cloudinary/delete/${public_id}`,{method:'DELETE'})// i need to fetch public id from db so store it 
 
         try {
             const req = await fetch(`${backend}/portfolio/remove/${id}`, {
@@ -73,11 +74,12 @@ export default function Portfolio() {
         category: "",
         link: "",
         img: "",
+        public_id: ""
     });
     const [modify, setModify] = useState(null);
 
     const onChange = (e) => {
-        const { name, value ,files,type} = e.target;
+        const { name, value, files, type } = e.target;
         setProjectDetail((prev) => ({ ...prev, [name]: type == 'file' ? files[0] : value }));
     };
 
@@ -107,12 +109,15 @@ export default function Portfolio() {
         console.log(Project.img)
 
         const { secure_url, public_id } = await cloudUpload(Project.img)
-        console.log({ secure_url, public_id })
-        Project.img = secure_url
+        const payload={
+            ...Project,
+            img: secure_url,
+            public_id: public_id
+        };
         const endPoint = selectProject === "new project" ? "add" : "modify";
         const method = selectProject === "new project" ? "POST" : "PATCH";
         const data =
-            selectProject === "new project" ? Project : { ...Project, id: modify };
+            selectProject === "new project" ? payload : { ...payload, id: modify };
 
         try {
             const req = await fetch(`${backend}/portfolio/${endPoint}`, {
@@ -233,7 +238,7 @@ export default function Portfolio() {
                                             <div className="flex">
                                                 <div
                                                     className="mx-auto text-xs text-red-600 bg-red-400 w-fit px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-red-400 cursor-pointer"
-                                                    onClick={() => deleteProject(project._id)}
+                                                    onClick={() => deleteProject(project._id,project.public_id)}
                                                 >
                                                     delete
                                                 </div>

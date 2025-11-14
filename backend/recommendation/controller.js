@@ -21,9 +21,9 @@ const fetchOne = async (req, res) => {
 
 const add = async (req, res) => {
 
-    const {name, description, designation, img, rate } = req.body;
+    const {name, description, designation, img, rate,public_id } = req.body;
     try {
-        await recommendationModel.create({ name, description, designation, img, rate })
+        await recommendationModel.create({ name, description, designation, img, rate,public_id })
         res.json({ success: true })
     } catch (err) {
         res.json({ err })
@@ -32,10 +32,10 @@ const add = async (req, res) => {
 
 const modify = async (req, res) => {
 
-    const { isModify, name, description, designation, img, rate } = req.body
+    const { isModify, name, description, designation, img, rate,public_id } = req.body
 
     try {
-        await recommendationModel.updateOne({ _id: isModify }, { $set: { name, description, designation, img, rate } })
+        await recommendationModel.updateOne({ _id: isModify }, { $set: { name, description, designation, img, rate,public_id } })
         res.json({ success: true })
 
     } catch (err) {

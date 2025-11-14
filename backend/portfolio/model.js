@@ -28,6 +28,11 @@ const portfolioSchema = new mongoose.Schema({
         // unique:true,
         required:true
     },
+      public_id: {
+        type: String
+
+    }
+    ,
      
 })
 const portfolioModel = mongoose.model('portfolioModel', portfolioSchema)
