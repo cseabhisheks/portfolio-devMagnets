@@ -70,31 +70,10 @@ app.set('views', './view')
 app.get('/mail', (req, res) => {
   res.render('donateTemplate', { name: 'sdaasd', mail: 'er', message: "hi", phoneNo: '23132344', amount: '123' })
 })
-const cloudinary = require('cloudinary').v2
-cloudinary.config({
-  CLOUD_NAME: `ddhgq1kbz`,
-  API_KEY: `472492568193172`,
-  API_SECRET: `0nLcrNsGBRcU836pGkY1c_Zpyzw`
-})
-app.get('/cloudinary/sign', (req, res) => {
-  try {
-    const timestamp = Date.now() / 1000
-    const signature = cloudinary.utils.api_sign_request({ timestamp }, process.env.API_SECRET)
-    const API_KEY = process.env.API_KEY
-    const CLOUD_NAME = process.env.CLOUD_NAME
-    res.json({ success: true, timestamp, signature, API_KEY, CLOUD_NAME })
-  } catch (err) {
-    res.json({ success: false, err });
-  }
-})
-app.delete('/cloudinary/delete:public_id', (req, res) => {
-  try {
-    const result = cloudinary.uploader.destroy(req.params.public_id)
-    res.json({ success: true, deleteStatus: result })
-  } catch (err) {
-    res.json({ success: false, err });
-  }
-})
+// cloudinary
+const cloudinary=require('./cloudinary/route.js')
+app.use('/cloudinary',cloudinary)
+
 //  index
 app.get('/', (req, res) => {
   res.send('hi buddy', mail)
