@@ -69,7 +69,7 @@ const fetch = async (req, res) => {
         else if (filter === 'mentorship') model = mentorshipModel
         else return res.status(400).json({ success: false, message: 'Invalid filter type' })
 
-        const data = await model.find()
+        const data = await model.find().sort({_id:-1})
         res.json(data)
     } catch (err) {
         res.json({ err, success: false })

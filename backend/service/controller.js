@@ -1,7 +1,7 @@
 const serviceModel = require("./serviceModel")
 const fetch = async (req, res) => {
     try {
-        const Data = await serviceModel.find()
+        const Data = await serviceModel.find().sort({_id:-1})
         res.json({ success: true, Data })
     } catch (err) {
         res.json({ err })

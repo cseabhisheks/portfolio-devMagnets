@@ -1,7 +1,7 @@
 const recommendationModel = require("./recommendationmodel")
 const fetch = async (req, res) => {
     try {
-        const Data = await recommendationModel.find()
+        const Data = await recommendationModel.find().sort({_id:-1})
         res.json({ success: true, Data })
     } catch (err) {
         res.json({ err })

@@ -1,7 +1,7 @@
 const model = require("./model")
 const fetch = async (req, res) => {
     try {
-        const Data = await model.find()
+        const Data = await model.find().sort({_id:-1})
         res.json({ success: true, Data })
     } catch (err) {
         res.json({ err })
