@@ -62,7 +62,10 @@ export default function RightMenu() {
                                         <ul className="flex flex-col gap-2 ">
                                             <button className=' capitalize bg-accent rounded-xl px-5 py-2 text-dark hover:scale-110' onClick={
                                                 async () => {
-                                                    const req = await fetch(`${import.meta.env.VITE_BACKEND}/admin/logout`)
+                                                    const req = await fetch(`${import.meta.env.VITE_BACKEND}/admin/logout`,{
+                                                        method:'POST',
+                                                        credentials:'include'
+                                                    })
                                                     const res = await req.json()
                                                     if (res.success) {
                                                         setAdminStatus(false)

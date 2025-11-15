@@ -15,8 +15,12 @@ const login = (req, res, next) => {
 const logout = (req, res) => {
   req.logout((err) => {
     if (err) return res.json({ success: false })
+    req.session.destroy((err) => {
+      if (err) return res.json({ sucess: false })
+      res.clearCookie('connect.sid')
+      return res.json({ success: true })
+    })
   })
-  return res.json({ success: true })
 }
 const isAuthenticated = (req, res) => {
   if (req.isAuthenticated()) {
