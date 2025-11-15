@@ -5,8 +5,7 @@ const login = (req, res, next) => {
     if (!user) return res.json({ mess: info.mess, success: false })
     req.logIn(user, (err) => {
       if (err) return res.json({ mess: 'login error', success: false })
-      console.log(req.session)
-      console.log(res.cookie)
+   
       return res.json({ mess: 'hi dev', success: true })
     })
   })(req, res, next)

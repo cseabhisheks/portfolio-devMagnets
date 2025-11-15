@@ -25,7 +25,7 @@ export default function Service() {
     const onChange = (e) => {
         const { name, value } = e.target
         setServiceData((prev) => ({ ...prev, [name]: value }))
-        console.log(ServiceData)
+
     }
     // fetch all card 
     const fetchAllServiceCard = async () => {
@@ -33,7 +33,6 @@ export default function Service() {
     }
     useEffect(() => {
         fetchAllServiceCard()
-        console.log(FetchServices)
     }, [])
 
 
@@ -64,8 +63,6 @@ export default function Service() {
         fetchAllServiceCard()
     }
     const Admin = useContext(isAuthenticated).AdminStatus
-    console.log(Admin)
-
     return (<>
         {isFormOpen && <ServiceTemplate actionText={`${isModify ? 'Modify' : 'add'} service card`} setFormOpen={setFormOpen} onChange={onChange} field={field} onSubmit={submit} data={ServiceData} />}
 

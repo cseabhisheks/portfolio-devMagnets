@@ -15,11 +15,10 @@ const contact = async (req, res) => {
 
         }
         const mailresponse = await Sendmail(mssg)
-        console.log('message send')
+
         res.json({ success: true, mailresponse })
     } catch (err) {
         res.json({ err, success: false })
-        console.log(err)
     }
 }
 const donate = async (req, res) => {
@@ -88,7 +87,6 @@ const remove = async (req, res) => {
         await model.deleteOne({ _id: id })
         res.json({ success: true })
     } catch (err) {
-        console.log(err)
         res.json({ err, success: false })
     }
 }

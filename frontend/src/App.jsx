@@ -19,7 +19,6 @@ export default function App() {
   const [loading, setLoading] = useState(true); // 👈 new
 
   useEffect(() => {
-    console.log(import.meta.env.MODE);
     const backend = import.meta.env.VITE_BACKEND;
     fetch(`${backend}/admin/isAuthenticated`, {
       method: 'GET',

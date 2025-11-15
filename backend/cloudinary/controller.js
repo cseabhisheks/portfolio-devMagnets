@@ -12,7 +12,6 @@ const sign = (req, res) => {
 }
 const remove =async (req, res) => {
     try {
-        console.log(req.params.public_id)
         const result = await cloudinary.uploader.destroy(req.params.public_id)
         res.json({ success: true, deleteStatus: result })
     } catch (err) {

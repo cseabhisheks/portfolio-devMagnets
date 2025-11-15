@@ -15,7 +15,7 @@ const add = async (req, res) => {
 }
 const modify = async (req, res) => {
     const { title, description, category, link, img, id,public_id } = req.body
-    console.log(req.body)
+
     try {
         await portfolioModels.findOneAndUpdate({ _id: id }, {
             $set: {
@@ -33,7 +33,6 @@ const fetch = async (req, res) => {
     try {
         const query =  (filter === '' || filter === 'all websites')? {}: { category: filter };
         const projects = await portfolioModels.find(query)
-        console.log(projects)
         res.json({ success: true, projects })
     }
     catch (err) {
@@ -45,7 +44,6 @@ const fetchOne = async (req, res) => {
     try {
         // findOne or findById — both work
         const project = await portfolioModels.findOne({ _id: id }); // ✅ correct field name
-        console.log(project)
         res.json({ success: true, project }); // ✅ return single object
     } catch (err) {
         res.json({ err, success: false });

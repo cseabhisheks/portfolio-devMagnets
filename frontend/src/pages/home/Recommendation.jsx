@@ -50,7 +50,7 @@ export default function Recommendation() {
     const onChange = (e) => {
         const { name, value, type, files } = e.target;
         setServiceData((prev) => ({ ...prev, [name]: type == 'file' ? files[0] : value }));
-        console.log(ServiceData)
+
     };
 
     // ====== ADD / MODIFY FORM HANDLERS ======
@@ -74,11 +74,9 @@ export default function Recommendation() {
         try {
             const del = await fetch(`${backend}/cloudinary/delete/${public_id}`, { method: 'DELETE' })// i need to fetch public id from db so store it 
             const r = await del.json()
-            console.log(r)
         }
         catch (err) {
-            console.log(err)
-
+            alert(err)
         }
         await removeService(`${backend}/recommendation/remove`, id, 'recommendation');
         fetchAllServiceCard();
@@ -87,11 +85,7 @@ export default function Recommendation() {
     // ====== FORM SUBMIT ======
     const submit = async (e) => {
         e.preventDefault();
-        console.log(ServiceData.img)
-  
-    let publicId = ServiceData.public_id;
-
- 
+        let publicId = ServiceData.public_id;
 
         // delete old cloudinary image
         if (publicId) {

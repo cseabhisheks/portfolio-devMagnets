@@ -5,7 +5,6 @@ const addService = async (URL, isModify, setModify, UserInputData,work) => {
         URL += isAdd
         const data = !isModify ? UserInputData : { ...UserInputData, isModify }
         const method = !isModify ? 'POST' : 'PATCH'
-        console.log(URL)
         const req = await fetch(URL, {
             method: method,
             headers: {
@@ -24,16 +23,16 @@ const addService = async (URL, isModify, setModify, UserInputData,work) => {
             }
 
         } else {
-            console.log(res.err)
+            alert(res.err)
         }
     } catch (err) {
-        console.log(err)
+        alert(err)
     }
 
 }
 
 const FetchService = async (URL, setData) => {
-    console.log('fetching services...')
+
     try {
         const req = await fetch(URL, {
             method: 'GET'
@@ -45,7 +44,7 @@ const FetchService = async (URL, setData) => {
     
 
     } catch (err) {
-        console.log(res.err)
+        alert(res.err)
     }
 }
 
@@ -59,15 +58,14 @@ const removeService = async (URL, id,work) => {
         if (res.success) {
             alert(`${work} card is deleted`)
         } else {
-            console.log(res.err)
+            alert(res.err)
         }
     } catch (err) {
-        console.log(err)
+        alert(err)
     }
 }
 
 const FetchServiceOne = async (URL, id, setData) => {
-    console.log('fetching services...one')
     try {
         const req = await fetch(URL, {
             method: 'POST',
@@ -79,13 +77,12 @@ const FetchServiceOne = async (URL, id, setData) => {
         const res = await req.json()
         if (res.success) {
             setData(res.Data[0])
-            console.log(res)
         }
         else {
-            console.log(res.err)
+            alert(res.err)
         }
     } catch (err) {
-        console.log(err)
+       alert(err)
     }
 }
 

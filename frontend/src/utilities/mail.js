@@ -18,7 +18,7 @@ const mail = async (Form, Route) => {
         }
 
     } catch (err) {
-        console.log('err', err)
+      alert(err)
     }
 }
 

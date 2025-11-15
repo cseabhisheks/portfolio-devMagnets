@@ -17,7 +17,6 @@ export default function Admin() {
             ...prev,
             [name]: value
         }))
-        console.log(form)
 
     }
     const { AdminStatus, setAdminStatus } = useContext(isAuthenticated)

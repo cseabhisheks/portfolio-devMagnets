@@ -28,7 +28,6 @@ export default function Education() {
     const onChange = (e) => {
         const { name, value } = e.target
         setServiceData((prev) => ({ ...prev, [name]: value }))
-        console.log(ServiceData)
     }
     // fetch all card 
     const fetchAllServiceCard = async () => {
@@ -36,7 +35,6 @@ export default function Education() {
     }
     useEffect(() => {
         fetchAllServiceCard()
-        console.log(FetchServices)
     }, [])
 
 

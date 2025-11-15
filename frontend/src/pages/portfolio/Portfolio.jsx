@@ -15,7 +15,6 @@ export default function Portfolio() {
 
     // Fetch all projects
     const fetchProjects = async () => {
-        console.log("fetching projects ....");
         try {
             const req = await fetch(`${backend}/portfolio/fetch`, {
                 method: 'POST',
@@ -28,10 +27,10 @@ export default function Portfolio() {
             if (res.success) {
                 setProjects(res.projects);
             } else {
-                console.log("error fetching projects from database");
+                alert("error fetching projects from database");
             }
         } catch (err) {
-            console.log("err (while fetching the projects list) " + err);
+            alert("err (while fetching the projects list) " + err);
         }
     };
 
@@ -62,7 +61,7 @@ export default function Portfolio() {
                 alert("Error deleting project from database");
             }
         } catch (err) {
-            console.log("Error while deleting project " + err);
+            alert("Error while deleting project " + err);
         }
     };
 
@@ -85,7 +84,6 @@ export default function Portfolio() {
 
     // Fetch single project for modification
     const modifiedfetchProjects = async (id) => {
-        console.log("fetching single project for modify...", id);
         try {
             const req = await fetch(`${backend}/portfolio/fetchOne`, {
                 method: "POST",
@@ -96,18 +94,16 @@ export default function Portfolio() {
             if (res.success && res.project) {
                 setProjectDetail(res.project);
             } else {
-                console.log("error fetching single project");
+                alert("error fetching single project");
             }
         } catch (err) {
-            console.log("err (while fetching the project): " + err);
+            alert("err (while fetching the project): " + err);
         }
     };
 
     // Add or modify project submit
     const addProjectsOnSubmit = async (e) => {
         e.preventDefault();
-        console.log(Project.img)
-
         let publicId = Project.public_id;
 
 
@@ -153,13 +149,13 @@ export default function Portfolio() {
                     img: "",
                 });
             } else {
-                console.log(
+                alert(
                     "Failed to add/modify project due to backend issue " +
                     JSON.stringify(res.err)
                 );
             }
         } catch (err) {
-            console.log("err while adding/modifying project " + err);
+            alert("err while adding/modifying project " + err);
         }
     };
     const Admin = useContext(isAuthenticated).AdminStatus
