@@ -39,7 +39,9 @@ const admin = require('./authentication/route.js')
 app.use(passport.initialize())
 app.use(passport.session())
 app.use('/admin', admin)
-
+//log 
+const log=require('./log/route.js')
+app.use('/log',log)
 
 
 // portfolio
@@ -72,8 +74,8 @@ app.get('/mail', (req, res) => {
   res.render('donateTemplate', { name: 'sdaasd', mail: 'er', message: "hi", phoneNo: '23132344', amount: '123' })
 })
 // cloudinary
-const cloudinary=require('./cloudinary/route.js')
-app.use('/cloudinary',cloudinary)
+const cloudinary = require('./cloudinary/route.js')
+app.use('/cloudinary', cloudinary)
 
 //  index
 app.get('/', (req, res) => {

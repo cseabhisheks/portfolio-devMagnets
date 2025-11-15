@@ -11,11 +11,12 @@ import Mails from "./pages/mails/Mails"
 import Admin from "./admin/Admin"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { isAuthenticated } from "./admin/AuthenticatedContext.js"
-import { useState,useEffect } from "react"
+import { useState, useEffect } from "react"
 import PR from "./ProtectedRoute.jsx/PR.jsx"
+import Log from "./pages/log/Log.jsx"
 export default function App() {
 
-    const [AdminStatus, setAdminStatus] = useState(false);
+  const [AdminStatus, setAdminStatus] = useState(false);
   const [loading, setLoading] = useState(true); // 👈 new
 
   useEffect(() => {
@@ -53,6 +54,7 @@ export default function App() {
             <Route path='/mentorship' element={<MentorShip />} />
             <Route element={<PR />}>
               <Route path='/mails' element={<Mails />} />
+              <Route path='/log' element={<Log />} />
             </Route>
             <Route path='/admin' element={<Admin />} />
             <Route path='*' element={<><div>page is under construction</div></>} />

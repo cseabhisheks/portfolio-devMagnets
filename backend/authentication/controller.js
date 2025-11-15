@@ -1,5 +1,7 @@
 const passport = require('./config')
+const { log } = require('../log/model')
 const login = (req, res, next) => {
+  log(req.ip,'login')
   passport.authenticate('local', (err, user, info) => {
     if (err) return res.json({ mess: "server error", success: false })
     if (!user) return res.json({ mess: info.mess, success: false })
@@ -12,6 +14,7 @@ const login = (req, res, next) => {
 
 }
 const logout = (req, res) => {
+  log(req.ip,'logout')
   req.logout((err) => {
     if (err) return res.json({ success: false })
     req.session.destroy((err) => {

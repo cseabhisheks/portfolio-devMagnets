@@ -36,17 +36,17 @@ export default function RightMenu() {
                         <div onClick={setMenubar} className="flex  h-[90vh] flex-col w-full bg-dark md:bg-darkGray ">
                             <div className="mt-[100px]  w-full p-5 text-sm ">
                                 <ul className="flex flex-col gap-2 ">
-                                    <NavLink to='/' className={({ isActive }) => (isActive ? 'text-white font-semibold' : '')}>Home</NavLink>
+                                    <NavLink to='/' className={({ isActive }) => (isActive ? 'text-accent font-semibold' : '')}>Home</NavLink>
                                     <NavLink to='/portfolio' className={({ isActive }) => (isActive ? 'text-[white]  font-semibold' : '')}>Portfolio</NavLink>
-                                    <NavLink to='/history' className={({ isActive }) => (isActive ? 'text-white  font-semibold' : '')}>History</NavLink>
-                                    <NavLink to='/blog' className={({ isActive }) => (isActive ? 'text-white  font-semibold' : '')}>Blog</NavLink>
+                                    <NavLink to='/history' className={({ isActive }) => (isActive ? 'text-accent  font-semibold' : '')}>History</NavLink>
+                                    <NavLink to='/blog' className={({ isActive }) => (isActive ? 'text-accent  font-semibold' : '')}>Blog</NavLink>
                                 </ul>
                             </div>
                             <hr className="bg-textSecondary w-full h-[1px] my-5" />
                             <div className=" w-full p-5 text-sm ">
                                 <ul className="flex flex-col gap-2 ">
-                                    <NavLink to='/contact' className={({ isActive }) => (isActive ? 'text-white  font-semibold' : '')}>Contact</NavLink>
-                                    <NavLink to='/donate' className={({ isActive }) => (isActive ? 'text-white font-semibold' : '')}>donate</NavLink>
+                                    <NavLink to='/contact' className={({ isActive }) => (isActive ? 'text-accent  font-semibold' : '')}>Contact</NavLink>
+                                    <NavLink to='/donate' className={({ isActive }) => (isActive ? 'text-accent font-semibold' : '')}>donate</NavLink>
                                     <NavLink to='/mentorship' className={({ isActive }) => (isActive ? 'text-[white]  font-semibold' : '')}>MentorShip</NavLink>
                                 </ul>
                             </div>
@@ -54,7 +54,13 @@ export default function RightMenu() {
                                 <> <hr className="bg-textSecondary w-full h-[1px] my-5" />
                                     <div className=" w-full p-5 text-sm ">
                                         <ul className="flex flex-col gap-2 ">
-                                            <NavLink to='/mails' className={({ isActive }) => (isActive ? 'text-white  font-semibold ' : '')}>Mails</NavLink>
+                                            <NavLink to='/mails' className={({ isActive }) => (isActive ? 'text-accent  font-semibold ' : '')}>Mails</NavLink>
+                                        </ul>
+
+                                    </div>
+                                    <div className=" w-full p-5 text-sm ">
+                                        <ul className="flex flex-col gap-2  ">
+                                            <NavLink to='/log' className={({ isActive }) => (isActive ? 'text-accent  font-semibold ' : '')}>Logs</NavLink>
                                         </ul>
                                     </div>
                                     <hr className="bg-textSecondary w-full h-[1px] my-5" />
@@ -62,9 +68,9 @@ export default function RightMenu() {
                                         <ul className="flex flex-col gap-2 ">
                                             <button className=' capitalize bg-accent rounded-xl px-5 py-2 text-dark hover:scale-110' onClick={
                                                 async () => {
-                                                    const req = await fetch(`${import.meta.env.VITE_BACKEND}/admin/logout`,{
-                                                        method:'POST',
-                                                        credentials:'include'
+                                                    const req = await fetch(`${import.meta.env.VITE_BACKEND}/admin/logout`, {
+                                                        method: 'POST',
+                                                        credentials: 'include'
                                                     })
                                                     const res = await req.json()
                                                     if (res.success) {
