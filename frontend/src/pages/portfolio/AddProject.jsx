@@ -1,19 +1,12 @@
-import {
-  MdTitle,
-  MdOutlineDescription,
-  MdLink,
-  MdOutlineCategory,
-  MdClose,
-  MdCamera,
-} from "react-icons/md";
+import {  MdTitle,  MdOutlineDescription,  MdLink,  MdOutlineCategory,  MdClose,  MdCamera,} from "react-icons/md";
+import { useState } from "react";
+export default function AddProject({  onChange,  addProjectsOnSubmit,  selectProject,  setSelectProject,  Project,}) {
+  const [defaultText, setDefaultText] = useState(selectProject === "modify project" ? "update project" : "add project")
 
-export default function AddProject({
-  onChange,
-  addProjectsOnSubmit,
-  selectProject,
-  setSelectProject,
-  Project,
-}) {
+  const text = () => {
+    setDefaultText('we are processing your request please wait')
+  }
+
   return (
     <>
       <div className="bg-dark/70 backdrop-blur-lg w-full h-full inset-0 absolute z-[119]"></div>
@@ -111,10 +104,9 @@ export default function AddProject({
         </label>
 
         <button
-          type="submit"
-          className="bg-accent w-fit px-10 py-2 capitalize text-dark font-semibold"
+          type="submit" onClick={text}          className="bg-accent w-fit px-10 py-2 capitalize text-dark font-semibold"
         >
-          {selectProject === "modify project" ? "update project" : "add project"}
+          {defaultText}
         </button>
       </form>
     </>

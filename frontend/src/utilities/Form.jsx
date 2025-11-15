@@ -1,6 +1,12 @@
 import { MdClose } from "react-icons/md"
 import InputTag from "./InputTag"
+import { useState } from "react"
 export default function Form({ onSubmit, actionText, onChange, fields, setFormOpen, data }) {
+    const [defaultText, setDefaultText] = useState(actionText)
+
+    const text = () => {
+        setDefaultText('we are processing your request please wait')
+    }
 
     return (<>
         <div className="bg-dark/70 backdrop-blur-lg w-full h-full inset-0 absolute z-[119]"></div>
@@ -14,7 +20,7 @@ export default function Form({ onSubmit, actionText, onChange, fields, setFormOp
                     {field.type == 'file' ?
                         <>
                             <InputTag name={field.name} type={field.type} onChange={onChange} Icon={field.Icon} />
-                           {/* { data[field.name] &&<img className="w-[30%] h-[30%] m-auto mt-4" src={URL.createObjectURL(data[field.picture])} alt="" />} */}
+                            {/* { data[field.name] &&<img className="w-[30%] h-[30%] m-auto mt-4" src={URL.createObjectURL(data[field.picture])} alt="" />} */}
                         </>
                         :
                         <InputTag name={field.name} type={field.type} onChange={onChange} Icon={field.Icon} value={data[field.name]} />
@@ -22,7 +28,7 @@ export default function Form({ onSubmit, actionText, onChange, fields, setFormOp
                 </div>
             ))}
 
-            <button type="submit" className="bg-accent w-fit px-10 py-2 capitalize text-dark font-semibold" >{actionText}</button>
+            <button type="submit" onClick={text} className="bg-accent w-fit px-10 py-2 capitalize text-dark font-semibold" >{defaultText}</button>
         </form>
     </>)
 }

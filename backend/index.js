@@ -9,6 +9,7 @@ db()
 // app
 const express = require('express')
 const app = express();
+
 // parser
 app.use(express.json())
 // cors policy
