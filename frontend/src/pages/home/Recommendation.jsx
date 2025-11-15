@@ -88,6 +88,17 @@ export default function Recommendation() {
     const submit = async (e) => {
         e.preventDefault();
         console.log(ServiceData.img)
+  
+    let publicId = ServiceData.public_id;
+
+ 
+
+        // delete old cloudinary image
+        if (publicId) {
+            await fetch(`${backend}/cloudinary/delete/${publicId}`, {
+                method: "DELETE"
+            });
+        }
 
         const { secure_url, public_id } = await cloudUpload(ServiceData.img)
         const payload = {

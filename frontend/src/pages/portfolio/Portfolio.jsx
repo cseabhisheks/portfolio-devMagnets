@@ -43,12 +43,12 @@ export default function Portfolio() {
     const [isAdmin] = useState(true);
 
     // Delete project
-    const deleteProject = async (id,public_id) => {
+    const deleteProject = async (id, public_id) => {
         const confirmDelete = window.confirm(
             "Are you sure you want to delete this portfolio card?"
         );
         if (!confirmDelete) return;
-        const del = await fetch(`${backend}/cloudinary/delete/${public_id}`,{method:'DELETE'})// i need to fetch public id from db so store it 
+        const del = await fetch(`${backend}/cloudinary/delete/${public_id}`, { method: 'DELETE' })// i need to fetch public id from db so store it 
 
         try {
             const req = await fetch(`${backend}/portfolio/remove/${id}`, {
@@ -108,8 +108,19 @@ export default function Portfolio() {
         e.preventDefault();
         console.log(Project.img)
 
+        let publicId = Project.public_id;
+
+
+
+        // delete old cloudinary image
+        if (publicId) {
+            await fetch(`${backend}/cloudinary/delete/${publicId}`, {
+                method: "DELETE"
+            });
+        }
+
         const { secure_url, public_id } = await cloudUpload(Project.img)
-        const payload={
+        const payload = {
             ...Project,
             img: secure_url,
             public_id: public_id
@@ -238,7 +249,7 @@ export default function Portfolio() {
                                             <div className="flex">
                                                 <div
                                                     className="mx-auto text-xs text-red-600 bg-red-400 w-fit px-4 py-2 rounded-3xl hover:bg-red-600 hover:text-red-400 cursor-pointer"
-                                                    onClick={() => deleteProject(project._id,project.public_id)}
+                                                    onClick={() => deleteProject(project._id, project.public_id)}
                                                 >
                                                     delete
                                                 </div>
