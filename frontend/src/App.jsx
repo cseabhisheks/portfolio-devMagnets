@@ -38,7 +38,7 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#0d0d0d] text-[#cfcfcf]">
+      <div className="p-5 flex flex-col items-center justify-center w-screen h-screen bg-[#0d0d0d] text-[#cfcfcf]">
 
         {/* Spinner */}
         <div className="animate-spin rounded-full h-14 w-14 border-4 border-gray-600 border-t-white mb-6"></div>
@@ -52,7 +52,7 @@ export default function App() {
         <p className="text-sm mt-2 opacity-70">
           Please wait, the server is waking up...
         </p>
-        <p className="capitalize text-xs mt-5 text-red-400">this is demo website not genuine website .it is made for learning purpose only</p>
+        <p className="text-center capitalize text-xs mt-5 text-red-400">this is demo website not genuine website .it is made for learning purpose only</p>
       </div>
     );
   }
