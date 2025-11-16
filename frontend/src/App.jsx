@@ -28,11 +28,11 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         setAdminStatus(data.loggedIn);
-        // setLoading(false);
+        setLoading(false);
       })
       .catch(() => {
         setAdminStatus(false);
-        // setLoading(false);
+        setLoading(false);
       });
   }, []);
 
