@@ -28,17 +28,35 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         setAdminStatus(data.loggedIn);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(() => {
         setAdminStatus(false);
-        setLoading(false);
+        // setLoading(false);
       });
   }, []);
 
   if (loading) {
-    return <div className="text-center text-white">Checking session...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#0d0d0d] text-[#cfcfcf]">
+
+        {/* Spinner */}
+        <div className="animate-spin rounded-full h-14 w-14 border-4 border-gray-600 border-t-white mb-6"></div>
+
+        {/* Title */}
+        <h1 className="text-2xl font-semibold tracking-wide">
+          Connecting to backend
+        </h1>
+
+        {/* Sub text */}
+        <p className="text-sm mt-2 opacity-70">
+          Please wait, the server is waking up...
+        </p>
+        <p className="capitalize text-xs mt-5 text-red-400">this is demo website not genuine website .it is made for learning purpose only</p>
+      </div>
+    );
   }
+
   return (<>
 
     <isAuthenticated.Provider value={{ AdminStatus, setAdminStatus }}>
